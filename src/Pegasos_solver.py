@@ -17,9 +17,12 @@ def vectorize_game_board(board):
             vector_board[16 * y + x] = board[y][x]
     return vector_board
 
+#TODO: record number of errors in each game, so that we can see if the algorithm gets better.
 def train(game_board, true_board, game_board_vector, weight_vectors):
     for this_square in range(0, 256):
         current_weight_vector = weight_vectors[this_square]
+        if game_board_vector[this_square] in range(0, 9):
+            continue
         if numpy.dot(current_weight_vector, game_board_vector) < 0:
             prediction = -1 #bomb
         else:
@@ -31,19 +34,29 @@ def train(game_board, true_board, game_board_vector, weight_vectors):
             if not true_board[y][x] == -1: #prediction is wrong
                 print("SORRY, NO BOMB.")
                 weight_vectors[this_square] = numpy.add(current_weight_vector, numpy.dot(1, game_board_vector))
+                boom = minesweeper_emulator.guess_square(game_board, true_board, x, y)
             else: #prediction is right
                 minesweeper_emulator.mark_bomb(game_board, x, y)
                 print("CORRECT!")
-                minesweeper_emulator.print_board(game_board)
+                #minesweeper_emulator.print_board(game_board)
         if prediction == 1: #no bomb
             print("guessing square: " + str(x) + ", " + str(y))
-            boom = minesweeper_emulator.guess_square(game_board, true_board, x, y)
-            minesweeper_emulator.print_board(game_board)
-            if boom: #prediction is wrong
+            if true_board[y][x] == -1: #prediction is wrong
+                print("SAVING YOUR ASS")
                 weight_vectors[this_square] = numpy.add(current_weight_vector, numpy.dot(-1, game_board_vector))
-                break
-            else:
-                pass #nothing to do
+                minesweeper_emulator.mark_bomb(game_board, x, y)
+            else: #prediction is right
+                boom = minesweeper_emulator.guess_square(game_board, true_board, x, y)
+                if boom: #prediction is wrong
+                    #weight_vectors[this_square] = numpy.add(current_weight_vector, numpy.dot(-1, game_board_vector))
+                    print("SOMETHING WENT TERRIBLY WRONG")
+                    exit(1)
+                    break
+                else:
+                    pass #nothing to do
+        minesweeper_emulator.print_board(game_board)
+        #update board vector:
+        game_board_vector = vectorize_game_board(game_board)
 
     return boom, weight_vectors
 
@@ -62,7 +75,7 @@ master_weight_vectors = numpy.zeros((16*16, 16*16))
 
 num_games = 0
 
-while num_games < 500:
+while num_games < 200:
     game_board_vector = vectorize_game_board(game_board)
     boom, master_weight_vectors = train(game_board, true_board, game_board_vector, master_weight_vectors)
     num_games += 1
@@ -74,4 +87,4 @@ while num_games < 500:
     minesweeper_emulator.print_board(game_board)
     #print(game_board)
 
-pickle.dump(master_weight_vectors, open("../data/master_weight_vectors", "wb"))
+pickle.dump(master_weight_vectors, open("../data/master_weight_vectors.pickle", "wb"))
