@@ -166,4 +166,4 @@ def print_board(board):
             print(str(i), end=" ")
     print()
 
-#play_game()
+play_game()
