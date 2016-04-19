@@ -1,6 +1,8 @@
-import minesweeper_emulator
-import numpy
 import pickle
+
+import numpy
+
+from src.emulator import minesweeper_emulator
 
 
 def generate_boards():
@@ -86,4 +88,4 @@ while num_games < 200:
     minesweeper_emulator.print_board(game_board)
     #print(game_board)
 
-pickle.dump(master_weight_vectors, open("../data/master_weight_vectors.pickle", "wb"))
+pickle.dump(master_weight_vectors, open("data/master_weight_vectors.pickle", "wb"))
