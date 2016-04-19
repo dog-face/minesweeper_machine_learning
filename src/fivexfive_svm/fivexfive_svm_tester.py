@@ -34,10 +34,10 @@ while -2 in game_board:
                 board_section = vectorize(board_section).reshape(1, -1)
                 prediction = classifier.predict_proba(board_section)
                 #print(prediction)
-                if prediction[0][0] > .9: #confident prediction of bomb
+                if prediction[0][1] > .75: #confident prediction of bomb
                     game_board = minesweeper_emulator.mark_bomb(game_board, x, y)
                     print(game_board)
-                if prediction[0][1] > .9: #confident prediction of not bomb
+                if prediction[0][0] > .75: #confident prediction of not bomb
                     boom, game_board = minesweeper_emulator.guess_square(game_board, true_board, x, y)
                     if boom:
                         print("You Lose. ")

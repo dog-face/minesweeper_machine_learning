@@ -23,16 +23,31 @@ def generate_5x5_board():
 
     #randomly choose some squares to be unclicked.
     num_unclicked = random.randint(0, 25)
-    for y in range(0, num_unclicked):
+    for i in range(0, num_unclicked):
         y = random.randint(0, 4)
         x = random.randint(0, 4)
         section[y,x] = -2
+
+    #randomly choose some bombs to be marked.
+    bomb_key = true_section == -1
+    num_bombs = 0
+    bomb_locs = []
+    for x1 in range(0, 5):
+        for y1 in range(0, 5):
+            if bomb_key[y1,x1] == True:
+                num_bombs += 1
+                bomb_locs.append((y1,x1))
+    num_marked_bombs = random.randint(0, num_bombs)
+    for i in range(0, num_marked_bombs):
+        index = random.randint(0, len(bomb_locs)-1)
+        y1, x1 = bomb_locs[index]
+        section[y1,x1] = -9
 
     return section, true_section
 
 print("Generating Boards...", end=" ")
 sys.stdout.flush()
-data = []
+data = []   
 keys = []
 for i in range(0, 20000):
     board_section, true_board_section = generate_5x5_board()
