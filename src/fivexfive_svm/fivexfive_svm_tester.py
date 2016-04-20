@@ -25,7 +25,15 @@ def vectorize(board_section):
 
 classifier = pickle.load(open("../data/5x5_trained_svm_classifier.pickle", "rb"))
 
+
+stuck = False
+threshold = .8
 while -2 in game_board:
+    if stuck: # if we didn't find any moves during last loop
+        threshold = 3 * threshold / 4 #take more risks
+    if not stuck: # if we did find a move last loop: reset stuck to true.
+        stuck = True
+        threshold = .8  #reset certainty threshold
     for x in range(0, 16):
         for y in range(0, 16):
             if game_board[y][x] == -2: #if this square is still unclicked
@@ -34,13 +42,16 @@ while -2 in game_board:
                 board_section = vectorize(board_section).reshape(1, -1)
                 prediction = classifier.predict_proba(board_section)
                 #print(prediction)
-                if prediction[0][1] > .75: #confident prediction of bomb
+                if prediction[0][1] > threshold: #confident prediction of bomb
                     game_board = minesweeper_emulator.mark_bomb(game_board, x, y)
                     print(game_board)
-                if prediction[0][0] > .75: #confident prediction of not bomb
+                    stuck = False #we found a move during this loop
+                if prediction[0][0] > threshold: #confident prediction of not bomb
                     boom, game_board = minesweeper_emulator.guess_square(game_board, true_board, x, y)
                     if boom:
+                        print(game_board)
                         print("You Lose. ")
                         exit(1)
                     else:
                         print(game_board)
+                        stuck = False #we found a move during this loop

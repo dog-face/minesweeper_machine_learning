@@ -47,7 +47,7 @@ def generate_5x5_board():
 
 print("Generating Boards...", end=" ")
 sys.stdout.flush()
-data = []   
+data = []
 keys = []
 for i in range(0, 20000):
     board_section, true_board_section = generate_5x5_board()
