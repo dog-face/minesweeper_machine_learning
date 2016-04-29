@@ -46,7 +46,7 @@ while -2 in game_board:
                     game_board = minesweeper_emulator.mark_bomb(game_board, x, y)
                     print(game_board)
                     stuck = False #we found a move during this loop
-                if prediction[0][0] > threshold: #confident prediction of not bomb
+                elif prediction[0][0] > threshold: #confident prediction of not bomb
                     boom, game_board = minesweeper_emulator.guess_square(game_board, true_board, x, y)
                     if boom:
                         print(game_board)

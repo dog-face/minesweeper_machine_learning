@@ -39,7 +39,7 @@ def generate_true_board(height, width, x1, y1):
     global height_master
     height_master = height
     board = numpy.zeros((height, width), dtype=numpy.int)
-    number_of_bombs = 40 #random.randint(int(1 * height * width / 6), int(2 * height * width / 6)) #between 1/4 and 2/4 of the board is bombs
+    number_of_bombs = int(width * height * 0.15) #40 #random.randint(int(1 * height * width / 6), int(2 * height * width / 6)) #between 1/4 and 2/4 of the board is bombs
     for i in range(number_of_bombs):
         #place each bomb in a random location. If we place two in the same position, that's okay. Just reduces the total bombs by 1 which doesn't matter
         x_position = random.randint(0, width - 1)
