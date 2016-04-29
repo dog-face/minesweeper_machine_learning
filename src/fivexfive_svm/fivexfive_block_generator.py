@@ -37,7 +37,7 @@ def generate_5x5_board():
             if bomb_key[y1,x1] == True:
                 num_bombs += 1
                 bomb_locs.append((y1,x1))
-    num_marked_bombs = random.randint(0, num_bombs)
+    num_marked_bombs = random.randint(0, int(num_bombs/2))
     for i in range(0, num_marked_bombs):
         index = random.randint(0, len(bomb_locs)-1)
         y1, x1 = bomb_locs[index]
@@ -45,30 +45,53 @@ def generate_5x5_board():
 
     return section, true_section
 
-print("Generating Boards...", end=" ")
+print("Generating training set...", end=" ")
 sys.stdout.flush()
-data = []
-keys = []
-for i in range(0, 20000):
+train_data = []
+train_keys = []
+for i in range(0, 5000):
     board_section, true_board_section = generate_5x5_board()
     #print(true_board_section)
     #print(board_section)
-    data.append(board_section)
+    train_data.append(board_section)
     if true_board_section[2, 2] == -1:
-        keys.append(-1)
+        train_keys.append(-1)
     else:
-        keys.append(1)
+        train_keys.append(1)
 print("Done. ")
-print(data[0])
+#print(train_data[0])
 
-print("Dumping to src/data/5x5_blocks_data.pickle...", end=" ")
+print("Dumping to src/data/5x5_blocks_train_data.pickle...", end=" ")
 sys.stdout.flush()
-pickle.dump(data, open("../src/data/5x5_blocks_data.pickle", "wb"))
+pickle.dump(train_data, open("../src/data/5x5_blocks_train_data.pickle", "wb"))
 print("Done. ")
 
-print("Dumping to src/data/5x5_blocks_keys.pickle...", end=" ")
+print("Dumping to src/data/5x5_blocks_train_keys.pickle...", end=" ")
 sys.stdout.flush()
-pickle.dump(keys, open("../src/data/5x5_blocks_keys.pickle", "wb"))
+pickle.dump(train_keys, open("../src/data/5x5_blocks_train_keys.pickle", "wb"))
+print("Done. ")
+
+print("Generating validation set...", end=" ")
+sys.stdout.flush()
+validate_data = []
+validate_keys = []
+for i in range(0, 5000):
+    board_section, true_board_section = generate_5x5_board()
+    validate_data.append(board_section)
+    if true_board_section[2, 2] == -1:
+        validate_keys.append(-1)
+    else:
+        validate_keys.append(1)
+print("Done. ")
+
+print("Dumping to src/data/5x5_blocks_validate_data.pickle...", end=" ")
+sys.stdout.flush()
+pickle.dump(validate_data, open("../src/data/5x5_blocks_validate_data.pickle", "wb"))
+print("Done. ")
+
+print("Dumping to src/data/5x5_blocks_validate_keys.pickle...", end=" ")
+sys.stdout.flush()
+pickle.dump(validate_keys, open("../src/data/5x5_blocks_validate_keys.pickle", "wb"))
 print("Done. ")
 
 print("ALL DONE. ")
