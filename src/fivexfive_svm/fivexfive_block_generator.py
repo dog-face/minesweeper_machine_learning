@@ -69,6 +69,11 @@ for i in range(0, 10000):
     board_section, true_board_section = generate_5x5_board()
     #print(true_board_section)
     #print(board_section)
+    if i > 7000:
+        for j in range(0, 10):
+            x = random.randint(2, 4)
+            y = random.randint(2, 4)
+            board_section[y, x] = -2
     train_data.append(board_section)
     if true_board_section[2, 2] == -1:
         train_keys.append(-1)
