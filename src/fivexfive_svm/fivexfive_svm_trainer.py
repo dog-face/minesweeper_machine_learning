@@ -17,7 +17,7 @@ sys.stdout.flush()
 vector_train_data = []
 vector_validate_data = []
 for board in train_data:
-    print(board)
+    #print(board)
     vector_board = board.reshape(25)
     vector_train_data.append(vector_board)
 for board in validate_data:
