@@ -6,6 +6,16 @@ import numpy
 from src.emulator import minesweeper_emulator
 
 
+def generate_early_board():
+    full_board = minesweeper_emulator.generate_true_board(7, 7, 1, 1)#7x7 so that edge spaces can reference unseen bombs
+    game_section = numpy.ones((5, 5), dtype=numpy.int) * -2#numpy.copy(full_board[1:-1, 1:-1])
+    true_section = full_board[1:-1, 1:-1]
+    for x in range(0, 3):
+        for y in range(0, 3):
+            if true_section[y, x] != -1:
+                game_section[y, x] = true_section[y, x]
+    return game_section, true_section
+
 def generate_5x5_board():
     x = random.randint(0, 6)
     y = random.randint(0, 6)
@@ -65,15 +75,23 @@ print("Generating training set...", end=" ")
 sys.stdout.flush()
 train_data = []
 train_keys = []
+for i in range(0, 5000):
+    board_section, true_board_section = generate_early_board()
+    train_data.append(board_section)
+    #print(board_section)
+    if true_board_section[2, 2] == -1:
+        train_keys.append(-1)
+    else:
+        train_keys.append(1)
 for i in range(0, 10000):
     board_section, true_board_section = generate_5x5_board()
     #print(true_board_section)
     #print(board_section)
-    if i > 7000:
+    '''if i > 7000:
         for j in range(0, 10):
             x = random.randint(2, 4)
             y = random.randint(2, 4)
-            board_section[y, x] = -2
+            board_section[y, x] = -2'''
     train_data.append(board_section)
     if true_board_section[2, 2] == -1:
         train_keys.append(-1)
@@ -96,6 +114,13 @@ print("Generating validation set...", end=" ")
 sys.stdout.flush()
 validate_data = []
 validate_keys = []
+for i in range(0, 5000):
+    board_section, true_board_section = generate_early_board()
+    validate_data.append(board_section)
+    if true_board_section[2, 2] == -1:
+        validate_keys.append(-1)
+    else:
+        validate_keys.append(1)
 for i in range(0, 5000):
     board_section, true_board_section = generate_5x5_board()
     validate_data.append(board_section)
