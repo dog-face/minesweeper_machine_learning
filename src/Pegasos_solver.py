@@ -1,8 +1,9 @@
-import minesweeper_emulator
-import numpy
 import pickle
 
-#minesweeper_emulator.play_game()
+import numpy
+
+from src.emulator import minesweeper_emulator
+
 
 def generate_boards():
     true_board = minesweeper_emulator.generate_true_board(16, 16, 1, 1) #first guess will be set to default to 1, 1
@@ -87,4 +88,4 @@ while num_games < 200:
     minesweeper_emulator.print_board(game_board)
     #print(game_board)
 
-pickle.dump(master_weight_vectors, open("../data/master_weight_vectors.pickle", "wb"))
+pickle.dump(master_weight_vectors, open("data/master_weight_vectors.pickle", "wb"))
