@@ -1,0 +1,28 @@
+old system: 5x5 random blocks
+validation error: 2.05%
+Average number of moves: 6.04
+
+with discount:
+Average number of moves: 3.52
+
+new system: data from real games
+C = 25
+Gamma = 1/1000
+validation error: 19.884287454323996%
+Average number of moves: 9.76
+
+with discount:
+Average number of moves: 8.56
+
+C = 1
+Gamma = 1
+validation error: 13.763702801461632%
+Average number of moves: 7.23
+
+with discount: 
+Average number of moves: 4.73
+
+
+Random Guessing:
+Average number of moves: 3.66
+
