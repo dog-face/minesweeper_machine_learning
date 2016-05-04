@@ -77,7 +77,7 @@ while epochs < 100:
 
                         predictions[y, x] = prediction[0][0]
 
-                        '''discount = 0
+                        discount = 0
                         for neighbor in minesweeper_emulator.get_neighbors(x, y):
                             (x1, y1) = neighbor
                             if game_board[y1, x1] == -2:
@@ -86,7 +86,7 @@ while epochs < 100:
                         prediction[0, 0] = prediction[0][0] - discount
                         prediction[0, 1] = prediction[0][1] - discount
                         #print("after: " + str(prediction[0][0]))
-'''
+
 
                         #print(prediction)
                         if(prediction[0][0] > max_certainty): #confident prediction of bomb

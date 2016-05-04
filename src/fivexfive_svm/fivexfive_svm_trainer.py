@@ -28,7 +28,7 @@ print("Done. ")
 
 print("Fitting classifier...", end=" ")
 sys.stdout.flush()
-classifier = SVC(C=1, kernel='rbf', gamma=1, probability=True)
+classifier = SVC(C=10, kernel='rbf', gamma=1, probability=True)
 classifier.fit(vector_train_data, train_keys)
 print("Done. ")
 
