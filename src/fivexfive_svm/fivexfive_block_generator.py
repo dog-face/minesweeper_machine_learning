@@ -100,14 +100,14 @@ for i in range(0, 10000):
 print("Done. ")
 #print(train_data[0])
 
-print("Dumping to src/data/5x5_blocks_train_data.pickle...", end=" ")
+print("Dumping to src/data/generation_train_data.pickle...", end=" ")
 sys.stdout.flush()
-pickle.dump(train_data, open("../src/data/5x5_blocks_train_data.pickle", "wb"))
+pickle.dump(train_data, open("../src/data/generation_train_data.pickle", "wb"))
 print("Done. ")
 
-print("Dumping to src/data/5x5_blocks_train_keys.pickle...", end=" ")
+print("Dumping to src/data/generation_train_keys.pickle...", end=" ")
 sys.stdout.flush()
-pickle.dump(train_keys, open("../src/data/5x5_blocks_train_keys.pickle", "wb"))
+pickle.dump(train_keys, open("../src/data/generation_train_keys.pickle", "wb"))
 print("Done. ")
 
 print("Generating validation set...", end=" ")
@@ -130,14 +130,14 @@ for i in range(0, 5000):
         validate_keys.append(1)
 print("Done. ")
 
-print("Dumping to src/data/5x5_blocks_validate_data.pickle...", end=" ")
+print("Dumping to src/data/generation_validate_data.pickle...", end=" ")
 sys.stdout.flush()
-pickle.dump(validate_data, open("../src/data/5x5_blocks_validate_data.pickle", "wb"))
+pickle.dump(validate_data, open("../src/data/generation_validate_data.pickle", "wb"))
 print("Done. ")
 
-print("Dumping to src/data/5x5_blocks_validate_keys.pickle...", end=" ")
+print("Dumping to src/data/generation_validate_keys.pickle...", end=" ")
 sys.stdout.flush()
-pickle.dump(validate_keys, open("../src/data/5x5_blocks_validate_keys.pickle", "wb"))
+pickle.dump(validate_keys, open("../src/data/generation_validate_keys.pickle", "wb"))
 print("Done. ")
 
 print("ALL DONE. ")

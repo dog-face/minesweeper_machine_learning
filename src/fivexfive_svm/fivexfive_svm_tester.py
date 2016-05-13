@@ -39,11 +39,11 @@ while epochs < 100:
             return True
     #print(get_5x5_section(game_board, 1, 1))
 
-    classifier = pickle.load(open("../data/5x5_trained_svm_classifier.pickle", "rb"))
-    #classifier = pickle.load(open("../data/5x5_new_classifier.pickle", "rb"))
+    classifier = pickle.load(open("../data/generation_svm_classifier.pickle", "rb"))
+    #classifier = pickle.load(open("../data/gameplay_svm_classifier.pickle", "rb"))
 
-    #new_train_data = pickle.load(open("../data/new_data.pickle", "rb"))
-    #new_train_keys = pickle.load(open("../data/new_keys.pickle", "rb"))
+    #new_train_data = pickle.load(open("../data/gameplay_data.pickle", "rb"))
+    #new_train_keys = pickle.load(open("../data/gameplay_keys.pickle", "rb"))
 
 
     stuck = False
@@ -136,8 +136,8 @@ while epochs < 100:
 
     num_games += 1
     total_moves += num_moves
-    #pickle.dump(new_train_data, open("../data/new_data.pickle", "wb"))
-    #pickle.dump(new_train_keys, open("../data/new_keys.pickle", "wb"))
+    #pickle.dump(new_train_data, open("../data/gameplay_data.pickle", "wb"))
+    #pickle.dump(new_train_keys, open("../data/gameplay_keys.pickle", "wb"))
 
 average_num_moves = total_moves/num_games
 print("Average number of moves: " + str(average_num_moves))

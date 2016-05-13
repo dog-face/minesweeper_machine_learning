@@ -5,11 +5,11 @@ import sys
 
 print("Loading data...", end=" ")
 sys.stdout.flush()
-train_data = pickle.load(open("../data/5x5_blocks_train_data.pickle", "rb"))
-train_keys = pickle.load(open("../data/5x5_blocks_train_keys.pickle", "rb"))
+train_data = pickle.load(open("../data/generation_train_data.pickle", "rb"))
+train_keys = pickle.load(open("../data/generation_train_keys.pickle", "rb"))
 
-validate_data = pickle.load(open("../data/5x5_blocks_validate_data.pickle", "rb"))
-validate_keys = pickle.load(open("../data/5x5_blocks_validate_keys.pickle", "rb"))
+validate_data = pickle.load(open("../data/generation_validate_data.pickle", "rb"))
+validate_keys = pickle.load(open("../data/generation_validate_keys.pickle", "rb"))
 print("Done. ")
 
 print("Vectorizing boards...", end=" ")
@@ -28,13 +28,13 @@ print("Done. ")
 
 print("Fitting classifier...", end=" ")
 sys.stdout.flush()
-classifier = SVC(C=10, kernel='rbf', gamma=1, probability=True)
+classifier = SVC(C=25, kernel='rbf', gamma=1, probability=True)
 classifier.fit(vector_train_data, train_keys)
 print("Done. ")
 
-print("Dumping to src/data/5x5_trained_svm_classifier.pickle...", end=" ")
+print("Dumping to src/data/generation_svm_classifier.pickle...", end=" ")
 sys.stdout.flush()
-pickle.dump(classifier, open("../data/5x5_trained_svm_classifier.pickle", "wb"))
+pickle.dump(classifier, open("../data/generation_svm_classifier.pickle", "wb"))
 print("Done. ")
 
 print("Checking validation error...", end=" ")
@@ -46,6 +46,9 @@ for i, board in enumerate(vector_validate_data):
     #if prediction[0] != 1:
         #print("#####")
     if prediction != validate_keys[i]:
+
+        print(validate_data[i])
+        print(validate_keys[i])
         errors += 1
 print("Done. Validation error is " + str(errors) + "/" + str(len(validate_data)) + " or " + str(100 * errors/len(validate_data)) + "%")
 

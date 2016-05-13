@@ -6,8 +6,8 @@ import sys
 
 print("Loading data...", end=" ")
 sys.stdout.flush()
-new_data = pickle.load(open("../data/new_data.pickle", "rb"))
-new_keys = pickle.load(open("../data/new_keys.pickle", "rb"))
+new_data = pickle.load(open("../data/gameplay_data.pickle", "rb"))
+new_keys = pickle.load(open("../data/gameplay_keys.pickle", "rb"))
 
 new_validate_data = []
 new_validate_keys = []
@@ -38,9 +38,9 @@ classifier = SVC(C=10, kernel='rbf', gamma=1/1000, probability=True)
 classifier.fit(vector_train_data, new_keys)
 print("Done. ")
 
-print("Dumping to src/data/5x5_new_classifier.pickle...", end=" ")
+print("Dumping to src/data/gameplay_svm_classifier.pickle...", end=" ")
 sys.stdout.flush()
-pickle.dump(classifier, open("../data/5x5_new_classifier.pickle", "wb"))
+pickle.dump(classifier, open("../data/gameplay_svm_classifier.pickle", "wb"))
 print("Done. ")
 
 print("Checking validation error...", end=" ")
