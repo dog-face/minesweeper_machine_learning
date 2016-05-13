@@ -21,6 +21,6 @@ The gameplay classifier is trained on data from real games the computer has alre
 To see actual gameplay, use fivexfive_svm/fivexfive_svm_tester.py<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;To change which classifier is tested, change the line commented #choose your classifier here"
 
-To view some statistics, run Report_data/combined_validation.py
+To view some statistics, run report_data/combined_validation.py
 
 To see some baseline algorithms play, run the files in baseline_algorithms/
