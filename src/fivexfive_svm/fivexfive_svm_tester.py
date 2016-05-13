@@ -39,9 +39,12 @@ while epochs < 100:
             return True
     #print(get_5x5_section(game_board, 1, 1))
 
+
+    #choose your classifier here
     classifier = pickle.load(open("../data/generation_svm_classifier.pickle", "rb"))
     #classifier = pickle.load(open("../data/gameplay_svm_classifier.pickle", "rb"))
 
+    #Generate data as we go
     #new_train_data = pickle.load(open("../data/gameplay_data.pickle", "rb"))
     #new_train_keys = pickle.load(open("../data/gameplay_keys.pickle", "rb"))
 
@@ -136,6 +139,8 @@ while epochs < 100:
 
     num_games += 1
     total_moves += num_moves
+
+    #Generate data as we go
     #pickle.dump(new_train_data, open("../data/gameplay_data.pickle", "wb"))
     #pickle.dump(new_train_keys, open("../data/gameplay_keys.pickle", "wb"))
 

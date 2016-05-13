@@ -1,2 +1,26 @@
 # minesweeper_machine_learning
 Minesweeper solver trained using machine learning
+
+Requires numpy to run
+
+Pre-generated training data has been saved to disk via pickle, and can be found in the data/ folder.
+If you wish to generate fresh training data:
+    for the generation method of learning:
+        run fivexfive_svm/fivexfive_block_generator.py
+    for the gameplay method of learning:
+        there are some lines in fivexfive_svm/fivexfive_svm_tester.py that need to be uncommented. These lines can be found by searching for "#Generate data as we go"
+        then run the fivexfive_svm_tester.py until you are satisfied with the quantity of data generated.
+
+If you're satisfied with the existing training data, and simply want to train the classifiers:
+    fivexfive_svm/generation_svm_trainer.py will train the generation classifier
+    fivexfive_svm/gameplay_svm_trainer.py will train the gameplay classifier.
+
+The generation classifier is trained on randomly generated data.
+The gameplay classifier is trained on data from real games the computer has already played. In theory, it should improve with each iteration of train -> generate new data -> train -> etc.
+
+To see actual gameplay, use fivexfive_svm/fivexfive_svm_tester.py
+    To change which classifier is tested, change the line commented #choose your classifier here"
+
+To view some statistics, run Report_data/combined_validation.py
+
+To see some baseline algorithms play, run the files in baseline_algorithms/
