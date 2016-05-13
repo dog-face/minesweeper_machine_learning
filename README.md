@@ -5,7 +5,7 @@ Requires numpy to run
 
 Pre-generated training data has been saved to disk via pickle, and can be found in the data/ folder. <br/>
 If you wish to generate fresh training data:<br/>
-    for the generation method of learning:<br/>
+\tfor the generation method of learning:<br/>
         run fivexfive_svm/fivexfive_block_generator.py<br/>
     for the gameplay method of learning:<br/>
         there are some lines in fivexfive_svm/fivexfive_svm_tester.py that need to be uncommented. These lines can be found by searching for "#Generate data as we go"<br/>
