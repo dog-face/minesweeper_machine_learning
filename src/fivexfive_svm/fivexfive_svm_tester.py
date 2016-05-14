@@ -7,7 +7,7 @@ epochs = 0
 total_moves = 0
 num_games = 0
 
-while epochs < 100:
+while epochs < 100: #Total number of games to play per session
     epochs += 1
     print(epochs)
     board_width = 9
@@ -35,10 +35,7 @@ while epochs < 100:
         if board_section[1, 1] < 0 and board_section[1, 2] < 0 and board_section[1, 3] < 0 and board_section[2, 1] < 0 and board_section[2, 3] < 0 and board_section[3, 1] < 0 and board_section[3, 2] < 0 and board_section[3, 3] < 0:
             return False
         else:
-            #print(board_section)
             return True
-    #print(get_5x5_section(game_board, 1, 1))
-
 
     #choose your classifier here
     classifier = pickle.load(open("../data/generation_svm_classifier.pickle", "rb"))
@@ -48,74 +45,54 @@ while epochs < 100:
     #new_train_data = pickle.load(open("../data/gameplay_data.pickle", "rb"))
     #new_train_keys = pickle.load(open("../data/gameplay_keys.pickle", "rb"))
 
-
     stuck = False
-    threshold = .8
-
     num_moves = 0
-    while -2 in game_board:
+    while -2 in game_board and stuck is False:
+        stuck = True
         max_certainty = 0
         best_square = (1, 1)
         guess = 0
-        '''if stuck: # if we didn't find any moves during last loop
-            threshold = 3 * threshold / 4 #take more risks
-        if not stuck: # if we did find a move last loop: reset stuck to true.
-            stuck = True
-            threshold = .8  #reset certainty threshold'''
         predictions = numpy.zeros((16, 16))
         for x in range(0, board_width):
             for y in range(0, board_height):
                 if game_board[y][x] == -2: #if this square is still unclicked
                     board_section = get_5x5_section(game_board, x, y)
                     if reasonable_guess(board_section):
+
+                        #Generate data as we go
                         '''new_train_data.append(board_section)
                         if true_board[y, x] == -1:
                             new_train_keys.append(-1)
                         else:
                             new_train_keys.append(1)'''
 
-                        #print(vectorize(board_section))
                         board_section = vectorize(board_section).reshape(1, -1)
                         prediction = classifier.predict_proba(board_section)
 
                         predictions[y, x] = prediction[0][0]
 
+                        #discounting
+                        '''
                         discount = 0
                         for neighbor in minesweeper_emulator.get_neighbors(x, y):
                             (x1, y1) = neighbor
                             if game_board[y1, x1] == -2:
                                 discount += .1
-                        #print("before: " + str(prediction[0][0]))
                         prediction[0, 0] = prediction[0][0] - discount
                         prediction[0, 1] = prediction[0][1] - discount
-                        #print("after: " + str(prediction[0][0]))
+                        '''
 
-
-                        #print(prediction)
-                        if(prediction[0][0] > max_certainty): #confident prediction of bomb
+                        if prediction[0][0] > max_certainty: #confident prediction of bomb
                             max_certainty = prediction[0][0]
                             best_square = (x, y)
                             guess = -1
-                        '''if prediction[0][1] > threshold: #confident prediction of bomb
-                            game_board = minesweeper_emulator.mark_bomb(game_board, x, y)
-                            print(game_board)
-                            stuck = False #we found a move during this loop'''
-                        if(prediction[0][1] > max_certainty): #confident prediction of not bomb
+                        if prediction[0][1] > max_certainty: #confident prediction of not bomb
                             max_certainty = prediction[0][1]
                             best_square = (x, y)
                             guess = 1
-                        '''elif prediction[0][0] > threshold: #confident prediction of not bomb
-                            boom, game_board = minesweeper_emulator.guess_square(game_board, true_board, x, y)
-                            if boom:
-                                print(game_board)
-                                print("You Lose. ")
-                                exit(1)
-                            else:
-                                print(game_board)
-                                stuck = False #we found a move during this loop'''
-        #print(predictions)
-        print(best_square)
-        print(max_certainty)
+
+        print("Best guess: " + str(best_square))
+        print("Certainty: " + str(max_certainty))
         if guess == 1:
             print("not bomb")
             x, y = best_square
@@ -135,7 +112,8 @@ while epochs < 100:
             num_moves += 1
             print(game_board)
             stuck = False #we found a move during this loop
-
+        if stuck is True:
+            print("Stuck! Aborting.") #sometimes, we get stuck.
 
     num_games += 1
     total_moves += num_moves
@@ -143,6 +121,7 @@ while epochs < 100:
     #Generate data as we go
     #pickle.dump(new_train_data, open("../data/gameplay_data.pickle", "wb"))
     #pickle.dump(new_train_keys, open("../data/gameplay_keys.pickle", "wb"))
+    #print("Total size of gampeplay training data: " + str(len(new_train_keys)))
 
 average_num_moves = total_moves/num_games
 print("Average number of moves: " + str(average_num_moves))

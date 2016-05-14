@@ -19,7 +19,7 @@ The generation classifier is trained on randomly generated data.<br/>
 The gameplay classifier is trained on data from real games the computer has already played. In theory, it should improve with each iteration of train -> generate new data -> train -> etc.
 
 To see actual gameplay, use fivexfive_svm/fivexfive_svm_tester.py<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;To change which classifier is tested, change the line commented #choose your classifier here"
+&nbsp;&nbsp;&nbsp;&nbsp;To change which classifier is tested, change the line commented "#choose your classifier here"
 
 To view some statistics, run report_data/combined_validation.py
 
