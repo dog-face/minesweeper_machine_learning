@@ -57,7 +57,7 @@ while epochs < 100: #Total number of games to play per session
             for y in range(0, board_height):
                 if game_board[y][x] == -2: #if this square is still unclicked
                     board_section = get_5x5_section(game_board, x, y)
-                    if reasonable_guess(board_section):
+                    if reasonable_guess(board_section): #restrictioni
 
                         #Generate data as we go
                         '''new_train_data.append(board_section)

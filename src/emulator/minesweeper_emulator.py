@@ -6,12 +6,14 @@ import random
 #-9 = marked as bomb
 #-1 = bomb
 
+
 def is_in_range(x, y):
     if x < 0 or y < 0:
         return False
     if x >= width_master or y >= height_master:
         return False
     return True
+
 
 def get_neighbors(x, y):
     neighbors = []
@@ -32,6 +34,7 @@ def get_neighbors(x, y):
     if is_in_range(x, y-1):
         neighbors.append((x, y-1))
     return neighbors
+
 
 def generate_true_board(height, width, x1, y1):
     global width_master
@@ -66,12 +69,14 @@ def generate_true_board(height, width, x1, y1):
                         board[y_n][x_n] += 1 #it should count this bomb as a neighbor
     return board
 
+
 def generate_game_board(true_board, x, y):
     game_board = numpy.ones(true_board.shape, dtype=numpy.int)
     game_board = game_board * -2 # unclicked value
     game_board[y, x] = true_board[y][x]
     explore(true_board, game_board, x, y)
     return game_board
+
 
 #expose adjacent squares until we have a perimiter of non-zero squares
 def explore(true_board, game_board, x, y):
@@ -85,6 +90,7 @@ def explore(true_board, game_board, x, y):
             if true_board[y_n][x_n] == 0:
                 explore_recursive(true_board, game_board, x_n, y_n, visited)
 
+
 def explore_recursive(true_board, game_board, x_n, y_n, visited):
     visited.append((x_n, y_n))
     if true_board[y_n][x_n] == 0:
@@ -96,11 +102,13 @@ def explore_recursive(true_board, game_board, x_n, y_n, visited):
                 if not (x_n, y_n) in visited:
                     explore_recursive(true_board, game_board, x_n, y_n, visited)
 
+
 def mark_bomb(game_board, x, y):
     game_board[y][x] = -9 #marked as bomb value
     return game_board
 
-def eguess_square(game_board, true_board, x, y):
+
+def guess_square(game_board, true_board, x, y):
     if not is_in_range(x, y):
             print("Invalid coordinates")
             exit(1)
@@ -111,6 +119,7 @@ def eguess_square(game_board, true_board, x, y):
         return True, game_board
     else:
         return False, game_board
+
 
 def play_game():
     # first move

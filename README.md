@@ -27,4 +27,3 @@ To see some baseline algorithms play, run the files in `baseline_algorithms/`
 
 To play a game yourself, uncomment the last line in `emulator/minesweeper_emulator.py` and run it. 
 
-note for dsontag: all coding was done by mznco (Noah) ... see https://github.com/mznco/minesweeper_machine_learning/graphs/contributors 
