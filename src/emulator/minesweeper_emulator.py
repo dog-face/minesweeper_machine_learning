@@ -100,7 +100,7 @@ def mark_bomb(game_board, x, y):
     game_board[y][x] = -9 #marked as bomb value
     return game_board
 
-def guess_square(game_board, true_board, x, y):
+def eguess_square(game_board, true_board, x, y):
     if not is_in_range(x, y):
             print("Invalid coordinates")
             exit(1)
