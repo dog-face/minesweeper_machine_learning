@@ -1,7 +1,7 @@
 # minesweeper_machine_learning
 Minesweeper solver trained using machine learning
 
-Requires numpy to run
+Requires numpy and sklearn to run
 
 Pre-generated training data has been saved to disk via pickle, and can be found in the data/ folder. <br/>
 If you wish to generate fresh training data:<br/>
