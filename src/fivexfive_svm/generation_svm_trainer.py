@@ -28,7 +28,7 @@ print("Done. ")
 
 print("Fitting classifier...", end=" ")
 sys.stdout.flush()
-classifier = SVC(C=25, kernel='rbf', gamma=1, probability=True)
+classifier = SVC(C=25, kernel='rbf', gamma=1/1000, probability=True)
 classifier.fit(vector_train_data, train_keys)
 print("Done. ")
 
@@ -43,12 +43,9 @@ errors = 0
 for i, board in enumerate(vector_validate_data):
     board = board.reshape(1, -1)
     prediction = classifier.predict(board)
-    #if prediction[0] != 1:
-        #print("#####")
     if prediction != validate_keys[i]:
-
-        print(validate_data[i])
-        print(validate_keys[i])
+        #print(validate_data[i])
+        #print(validate_keys[i])
         errors += 1
 print("Done. Validation error is " + str(errors) + "/" + str(len(validate_data)) + " or " + str(100 * errors/len(validate_data)) + "%")
 
